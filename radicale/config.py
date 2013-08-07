@@ -93,8 +93,16 @@ for section, values in INITIAL_CONFIG.items():
     for key, value in values.items():
         _CONFIG_PARSER.set(section, key, value)
 
-_CONFIG_PARSER.read("/etc/radicale/config")
-_CONFIG_PARSER.read(os.path.expanduser("~/.config/radicale/config"))
+try:
+    _CONFIG_PARSER.read("/etc/radicale/config")
+except OSError as e:
+    if e.errno == 13:
+        sys.stderr.write("Permission denied on /etc/radicale/config\n")
+try:
+    _CONFIG_PARSER.read(os.path.expanduser("~/.config/radicale/config"))
+except OSError as e:
+    if e.errno == 13:
+        sys.stderr.write("Permission denied on ~/.config/radicale/config\n")
 if "RADICALE_CONFIG" in os.environ:
     _CONFIG_PARSER.read(os.environ["RADICALE_CONFIG"])
 
