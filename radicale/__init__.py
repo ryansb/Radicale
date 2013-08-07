@@ -391,6 +391,7 @@ class Application(object):
             # Create the collection if it does not exist
             if not collection.exists:
                 if collection in write_collections:
+                    log.LOGGER.debug("About to make %s" % collection)
                     log.LOGGER.debug(
                         "Creating collection %s" % collection.name)
                     collection.write()
