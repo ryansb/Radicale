@@ -434,7 +434,11 @@ class Collection(object):
         """Collection name."""
         log.LOGGER.debug("About to get the displayname path: %s" % self.path)
         with self.props as props:
-            return props.get("D:displayname", self.path.split(os.path.sep)[-1])
+            try:
+                return props.get("D:displayname", self.path.split(os.path.sep)[-1])
+            except OSError as e:
+                if e.errno == 13:
+                    raise Exception("Perms denied for %s" % self.path)
 
     @property
     def headers(self):
