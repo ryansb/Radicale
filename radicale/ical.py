@@ -29,6 +29,7 @@ import os
 import posixpath
 import uuid
 from contextlib import contextmanager
+from radicale import log
 
 
 def serialize(tag, headers=(), items=()):
@@ -431,6 +432,7 @@ class Collection(object):
     @property
     def name(self):
         """Collection name."""
+        log.LOGGER.debug("About to get the displayname path: %s" % self.path)
         with self.props as props:
             return props.get("D:displayname", self.path.split(os.path.sep)[-1])
 
