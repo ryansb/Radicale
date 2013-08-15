@@ -38,6 +38,8 @@ LOGGER = logging.getLogger()
 def start():
     """Start the logging according to the configuration."""
     filename = os.path.expanduser(config.get("logging", "config"))
+    if "RADICALE_LOGGING_CONFIG" in os.environ:
+        filename = os.environ["RADICALE_LOGGING_CONFIG"]
     debug = config.getboolean("logging", "debug")
 
     if os.path.exists(filename):
