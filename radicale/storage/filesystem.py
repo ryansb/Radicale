@@ -57,6 +57,11 @@ class Collection(ical.Collection):
 
     def _create_dirs(self):
         """Create folder storing the collection if absent."""
+        from radicale import log
+        log.LOGGER.debug("DB is %s, type %s" + (config.get("storage",
+                                                           "database_url"),
+                                                config.get("storage", "type")))
+
         if not os.path.exists(os.path.dirname(self._path)):
             os.makedirs(os.path.dirname(self._path))
 
