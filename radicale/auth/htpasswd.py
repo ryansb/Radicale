@@ -27,6 +27,7 @@ supported, but md5 is not (see ``htpasswd`` man page to understand why).
 
 """
 
+import os
 import base64
 import hashlib
 
@@ -34,6 +35,8 @@ from .. import config
 
 
 FILENAME = config.get("auth", "htpasswd_filename")
+if "RADICALE_HTPASSWD" in os.environ:
+    FILENAME = os.environ["RADICALE_HTPASSWD"]
 ENCRYPTION = config.get("auth", "htpasswd_encryption")
 
 
